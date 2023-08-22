@@ -20,7 +20,7 @@ async def _경민아(ctx,*args):
     if ctx.author == bot.user:
         return
     if ctx.channel.id==bot_log:
-        await ctx.delete()
+        await ctx.message.delete()
         return
     await baekjoon._경민아(ctx, args)
 
