@@ -78,13 +78,12 @@ class SubjectView(discord.ui.View):
                 problems.add((data['items'][0]['titleKo'],data['items'][0]['problemId']))
 
         description='\n'.join(f'**{p[0]}** - [{p[1]}](https://www.acmicpc.net/problem/{p[1]})\n' for p in problems)
+        description+=f'\n\n tag : ||{select.values[0]}||'
         
         embed=discord.Embed(title='오늘의 문제', description=description)
         
-        select.placeholder=interaction.data['values'][0]
-        select.disabled=True
-        await interaction.response.edit_message(content=today, embed=embed, view=self)
-        await interaction.guild.get_channel(bot_log).send(content=today, embed=embed, view=self)
+        await interaction.response.edit_message(content=today, embed=embed, view=None)
+        await interaction.guild.get_channel(bot_log).send(content=today, embed=embed)
 
 class AdditionalProblem(discord.ui.View):
     tags={
