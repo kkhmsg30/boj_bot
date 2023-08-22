@@ -51,6 +51,7 @@ class SubjectView(discord.ui.View):
         placeholder='Choose a tag',
         options=[
             discord.SelectOption(label='None'),
+            discord.SelectOption(label='Random'),
             discord.SelectOption(label='수학'),
             discord.SelectOption(label='구현'),
             discord.SelectOption(label='다이나믹 프로그래밍'),
@@ -60,7 +61,10 @@ class SubjectView(discord.ui.View):
             ]
         )
     async def select_callback(self,interaction,select):
-        subject=SubjectView.tags[interaction.data['values'][0]]
+        option=select.values[0]
+        if option=='Random':
+            option=['수학', '구현', '다이나믹 프로그래밍', '그래프 이론', '자료 구조', '그리디 알고리즘'][random.randint(0,6)]
+        subject=SubjectView.tags[option]
         tier=[r'*p5..p2']
         solvednum=r's%23100..'
         lang=r'lang%3Ako'
@@ -78,7 +82,7 @@ class SubjectView(discord.ui.View):
                 problems.add((data['items'][0]['titleKo'],data['items'][0]['problemId']))
 
         description='\n'.join(f'**{p[0]}** - [{p[1]}](https://www.acmicpc.net/problem/{p[1]})\n' for p in problems)
-        description+=f'\n\n tag : ||{select.values[0]}||'
+        description+=f'\n\n tag : ||{option}||'
         
         embed=discord.Embed(title='오늘의 문제', description=description)
         
