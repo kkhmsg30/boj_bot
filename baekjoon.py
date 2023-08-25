@@ -6,9 +6,22 @@ from datetime import datetime
 from pytz import timezone
 
 
+from dotenv import load_dotenv
+from pathlib import Path
+import os
+
+# load environment variables
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
+
+bot_token=os.getenv('BOT_TOKEN')
+bot_log=int(os.getenv('PROBLEM_LOG'))
+additional_problem=int(os.getenv('ADDITIONAL_PROBLEM_LOG'))
+
 tier_image_urls=[None]+['https://media.discordapp.net/attachments/1006707877400031283/1006719572541460611/1.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006719572918939740/2.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006719573283831878/3.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006719573661339668/4.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006719574189813880/5.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006719574747660308/6.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006719575318073465/7.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006719575825592350/8.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006719576320528454/9.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006719576769310850/10.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835716241772635/11.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835716573106247/12.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835716900270200/13.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835717168713778/14.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835717856563200/15.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835718263422976/16.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835718682845235/17.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835719001604127/18.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835719383302154/19.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835719773360158/20.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835800291422219/21.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835800786337822/22.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835801075753000/23.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835801419690015/24.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835801738444800/25.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835802090774558/26.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835802455683162/27.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835802799607848/28.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835803181297674/29.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835803600719892/30.png?width=397&height=508','https://media.discordapp.net/attachments/1006707877400031283/1006835825843118150/31.png?width=397&height=508']
-bot_log=1006707877400031283 # 앵글리에의 기억
-additional_problem=1022408326841114675
+# bot_log=1006707877400031283 # 앵글리에의 기억
+# additional_problem=1022408326841114675
 
 
 def get_profile_by_id(id):
@@ -170,7 +183,6 @@ class ProblemTypeView(discord.ui.View):
     @discord.ui.button(label='설정 완료')
     async def button_callback(self,interaction,button):
         pass
-
     
 async def _경민아(ctx, args):
     try:
@@ -187,6 +199,7 @@ async def _경민아(ctx, args):
         # 세 문제 정하기
         if args==('문제줘',):
             today=datetime.now(timezone('Asia/Seoul')).strftime(r"%Y%m%d")
+            print(type(bot_log))
             messages=[m async for m in ctx.guild.get_channel(bot_log).history(limit=1)]
             if messages[0].content==today:
                 await ctx.reply('아까 알려줬자나유!', embed=messages[0].embeds[0], view=discord.ui.View.from_message(messages[0]))

@@ -1,15 +1,23 @@
 import discord
 from discord.ext import commands
 import baekjoon
+from dotenv import load_dotenv
+from pathlib import Path
+import os
+
+# load environment variables
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
+
+bot_token=os.getenv('BOT_TOKEN')
+bot_log=os.getenv('PROBLEM_LOG')
+
 
 intents=discord.Intents.default()
 intents.message_content=True
 
 bot=commands.Bot(command_prefix='', intents=intents)
-
-token = r"MTAwNTA2MjY5NTY5MjgwNDExNg.GvrngO.ia"+r"NYmyKUyMLVnu9_2d2Oyf5Oia4Rx95J2aAtIU" # 앵글리에
-
-bot_log=baekjoon.bot_log # 앵글리에의 기억
 
 @bot.event
 async def on_ready():
@@ -25,4 +33,4 @@ async def _경민아(ctx,*args):
     await baekjoon._경민아(ctx, args)
 
 
-bot.run(token)
+bot.run(bot_token)
