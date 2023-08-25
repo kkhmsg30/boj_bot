@@ -14,8 +14,7 @@ load_dotenv(BASE_DIR / '.env')
 async def start():
     bot_token=os.getenv('BOT_TOKEN')
 
-    intents=discord.Intents.default()
-    intents.message_content=True
+    intents=discord.Intents.all()
     
     async with commands.Bot(command_prefix='', intents=intents) as bot:
         @bot.event
