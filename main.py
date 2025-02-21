@@ -1,13 +1,12 @@
 import discord
 from discord.ext import commands
-from baekjoon import BOJ
+from boj import BOJ
 from dotenv import load_dotenv
 from pathlib import Path
 import os
 import asyncio
 
-# load environment variables
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 load_dotenv(BASE_DIR / '.env')
 
@@ -24,4 +23,7 @@ async def start():
         await bot.add_cog(BOJ(bot))
         await bot.start(bot_token)
 
-asyncio.run(start())
+if __name__=="__main__":
+    from gpt import generate_encouragement
+    print(generate_encouragement())
+    # asyncio.run(start())
