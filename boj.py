@@ -8,6 +8,7 @@ from pytz import timezone
 from dotenv import load_dotenv
 from pathlib import Path
 import os
+from db import DB
 
 boj_id={384563841146683402: "kkhmsg30", 383225124498702338: "tndyd0706"}
 
@@ -171,10 +172,7 @@ class BOJ(commands.Cog):
         super().__init__()
         self.bot = bot
         
-        # load environment variables
-        BASE_DIR = Path(__file__).resolve().parent.parent
-
-        load_dotenv(BASE_DIR / '.env')
+        self.db = DB()
 
         self.problem_log=int(os.getenv('PROBLEM_LOG'))
         self.additional_problem_log=int(os.getenv('ADDITIONAL_PROBLEM_LOG'))
@@ -196,8 +194,12 @@ class BOJ(commands.Cog):
             await ctx.message.delete()
             return
         try:
-            if random.randint(1,200)==1:
+            if random.randint(1,20)==1:
                 await ctx.reply('헹?')
+                return
+            
+            if not self.db.user_exist("kkhmsg300"):
+                await ctx.reply("누구세요?")
                 return
 
             # 비어있을때

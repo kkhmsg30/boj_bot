@@ -8,7 +8,7 @@ import asyncio
 
 BASE_DIR = Path(__file__).resolve().parent
 
-load_dotenv(BASE_DIR / '.env')
+load_dotenv(BASE_DIR / '.env', override=True)
 
 async def start():
     bot_token=os.getenv('BOT_TOKEN')
@@ -24,6 +24,4 @@ async def start():
         await bot.start(bot_token)
 
 if __name__=="__main__":
-    from gpt import generate_encouragement
-    print(generate_encouragement())
-    # asyncio.run(start())
+    asyncio.run(start())
