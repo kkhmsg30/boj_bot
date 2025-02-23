@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from boj import BOJ
+from bot import BOT
 from dotenv import load_dotenv
 from pathlib import Path
 import os
@@ -20,7 +20,7 @@ async def start():
         async def on_ready():
             print("bot ready")
             
-        await bot.add_cog(BOJ(bot))
+        await bot.add_cog(BOT(bot))
         await bot.start(bot_token)
 
 if __name__=="__main__":
